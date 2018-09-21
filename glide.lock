@@ -1,0 +1,22 @@
+hash: 03bb6a30aaa205e4c89fec7ff6b36472cb676dc966d5cc3e1f0166cf92e883a2
+updated: 2018-09-21T14:52:21.769712+02:00
+imports:
+- name: github.com/blang/semver
+  version: 2ee87856327ba09384cabd113bc6b5d174e9ec0f
+- name: github.com/logrusorgru/aurora
+  version: d694e6f975a9109e2b063829d563a7c153c4b53c
+- name: github.com/pkg/errors
+  version: 645ef00459ed84a119197bfb8d8205042c6df63d
+- name: go.uber.org/atomic
+  version: 1ea20fb1cbb1cc08cbd0d913a96dead89aa18289
+- name: go.uber.org/multierr
+  version: 3c4937480c32f4c13a875a1829af76c98ca3d40a
+- name: go.uber.org/zap
+  version: ff33455a0e382e8a81d14dd7c922020b6b5e7982
+  subpackages:
+  - buffer
+  - internal/bufferpool
+  - internal/color
+  - internal/exit
+  - zapcore
+testImports: []

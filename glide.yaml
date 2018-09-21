@@ -1,0 +1,9 @@
+package: github.com/phonkee/plugsys
+import:
+- package: github.com/blang/semver
+  version: ^3.5.1
+- package: go.uber.org/zap
+  version: ^1.9.1
+- package: github.com/pkg/errors
+  version: ^0.8.0
+- package: github.com/logrusorgru/aurora
