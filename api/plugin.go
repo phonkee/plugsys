@@ -24,7 +24,7 @@ type PluginStorage interface {
 	Get(ID string) (Plugin, bool)
 	Exists(ID string) bool
 	Len() int
-	Inject(target interface{}) (err error)
+	Inject(target interface{}, skipMissing bool) (err error)
 	Version(ID string) (semver.Version, bool)
 }
 
