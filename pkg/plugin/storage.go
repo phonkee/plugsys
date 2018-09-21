@@ -47,7 +47,7 @@ func (s *storage) Add(plugin api.Plugin) (err error) {
 	// add plugin to apps
 	s.apps = append(s.apps, newStorageItem(plugin))
 
-	return
+	return s.inj.Provide(plugin, plugin.ID(), "plugin")
 }
 
 // Each iterates over all apps and calls callback
