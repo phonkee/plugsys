@@ -33,6 +33,8 @@ type storage struct {
 
 // Add adds plugin to storage
 func (s *storage) Add(plugin api.Plugin) (err error) {
+	s.logger.Debug("adding plugin", zap.String("plugin", plugin.ID()))
+
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
@@ -130,8 +132,8 @@ func (s *storage) Len() int {
 }
 
 // Inject injects plugins into given struct
-func (s *storage) Inject(target interface{}) (err error) {
-	return
+func (s *storage) Inject(target interface{}, skipMissing bool) (err error) {
+	return s.inj.Inject(target, skipMissing)
 }
 
 // Available returns all plugin ids available
