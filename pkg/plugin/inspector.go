@@ -3,7 +3,7 @@ package plugin
 import (
 	"reflect"
 
-	"github.com/phonkee/roger/api"
+	"github.com/phonkee/plugsys/api"
 	"github.com/pkg/errors"
 )
 
