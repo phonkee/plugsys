@@ -30,11 +30,12 @@ type Injector interface {
 	// Inject injects all dependencies into given structure
 	Inject(target interface{}, skipMissing bool) error
 
+	// Remove removes dependency
 	Remove(name string, namespace ...string) (err error)
 }
 
 // New returns new Injector instance
-func New(options ...Option) (Injector) {
+func New(options ...Option) Injector {
 
 	// prepare injector
 	result := &injector{

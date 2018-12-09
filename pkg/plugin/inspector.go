@@ -3,7 +3,7 @@ package plugin
 import (
 	"reflect"
 
-	"github.com/phonkee/plugsys/api"
+	"github.com/phonkee/plugsys"
 	"github.com/pkg/errors"
 )
 
@@ -25,13 +25,13 @@ type inspector struct {
 func (i *inspector) add(callback interface{}) (err error) {
 	cType := reflect.TypeOf(callback)
 	if cType == nil {
-		return errors.Wrap(api.ErrInvalidCallback, "cannot accept nil")
+		return errors.Wrap(plugsys.ErrInvalidCallback, "cannot accept nil")
 	}
 	if cType.Kind() != reflect.Func {
-		return errors.Wrap(api.ErrInvalidCallback, "must be function")
+		return errors.Wrap(plugsys.ErrInvalidCallback, "must be function")
 	}
 	if cType.NumIn() != 1 {
-		return errors.Wrap(api.ErrInvalidCallback, "single parameter required")
+		return errors.Wrap(plugsys.ErrInvalidCallback, "single parameter required")
 	}
 
 	// assign first parameter
@@ -41,12 +41,12 @@ func (i *inspector) add(callback interface{}) (err error) {
 	errorInterface := reflect.TypeOf((*error)(nil)).Elem()
 
 	if cType.NumOut() != 1 || !cType.Out(0).Implements(errorInterface) {
-		return errors.Wrap(api.ErrInvalidCallback, "single return value (error) required")
+		return errors.Wrap(plugsys.ErrInvalidCallback, "single return value (error) required")
 	}
 
 	// we accept only interfaces
 	if i.target.Kind() != reflect.Interface {
-		return errors.Wrap(api.ErrInvalidCallback, "parameter must be interface")
+		return errors.Wrap(plugsys.ErrInvalidCallback, "parameter must be interface")
 	}
 
 	return
@@ -58,7 +58,7 @@ func (i *inspector) isImplemented(target interface{}) bool {
 
 func (i *inspector) call(target interface{}) (err error) {
 	if !i.isImplemented(target) {
-		return api.ErrInterfaceNotImplemented
+		return plugsys.ErrInterfaceNotImplemented
 	}
 
 	in := make([]reflect.Value, 1)

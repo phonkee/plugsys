@@ -1,6 +1,7 @@
 package injector
 
 import (
+	"fmt"
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
@@ -49,7 +50,14 @@ func TestInjector(t *testing.T) {
 	})
 
 	Convey("Test Inject interface", t, func() {
+		i := New(WithTag("mytag"))
 
+		x := struct {
+			Something fmt.Stringer
+		}{}
+
+		_ = x
+		_ = i
 	})
 
 }

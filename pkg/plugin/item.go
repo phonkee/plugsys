@@ -2,15 +2,15 @@ package plugin
 
 import (
 	"github.com/blang/semver"
-	"github.com/phonkee/plugsys/api"
+	"github.com/phonkee/plugsys"
 )
 
-func newStorageItem(plugin api.Plugin) api.PluginStorageItem {
+func newStorageItem(plugin plugsys.Plugin) plugsys.PluginStorageItem {
 	result := &storageItem{
 		plugin: plugin,
 	}
 
-	if pv, ok := plugin.(api.PluginVersion); ok {
+	if pv, ok := plugin.(plugsys.PluginVersion); ok {
 		result.version = pv.Version()
 	} else {
 		result.version, _ = semver.Parse("0.1-dev")
@@ -21,11 +21,11 @@ func newStorageItem(plugin api.Plugin) api.PluginStorageItem {
 
 // storageItem implements PluginRegistryItem
 type storageItem struct {
-	plugin  api.Plugin
+	plugin  plugsys.Plugin
 	version semver.Version
 }
 
-func (r *storageItem) Plugin() api.Plugin {
+func (r *storageItem) Plugin() plugsys.Plugin {
 	return r.plugin
 }
 

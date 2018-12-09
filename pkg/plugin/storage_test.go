@@ -3,7 +3,7 @@ package plugin
 import (
 	"testing"
 
-	"github.com/phonkee/plugsys/api"
+	"github.com/phonkee/plugsys"
 	"github.com/pkg/errors"
 	. "github.com/smartystreets/goconvey/convey"
 )
@@ -20,30 +20,30 @@ func (t TestPlugin2) Additional() { }
 func TestStorage(t *testing.T) {
 
 	Convey("Test New", t, func() {
-		s := NewStorage(nil)
+		s := NewStorage()
 		So(s, ShouldNotBeNil)
 	})
 
 	Convey("Test Add Plugin", t, func() {
-		s := NewStorage(nil)
+		s := NewStorage()
 
 		So(s.Add(TestPlugin("test")), ShouldBeNil)
-		So(errors.Cause(s.Add(TestPlugin("test"))), ShouldEqual, api.ErrPluginAlreadyRegistered)
+		So(errors.Cause(s.Add(TestPlugin("test"))), ShouldEqual, plugsys.ErrPluginAlreadyRegistered)
 		So(s.Add(TestPlugin("test2")), ShouldBeNil)
-		So(errors.Cause(s.Add(TestPlugin("test2"))), ShouldEqual, api.ErrPluginAlreadyRegistered)
+		So(errors.Cause(s.Add(TestPlugin("test2"))), ShouldEqual, plugsys.ErrPluginAlreadyRegistered)
 	})
 
 	Convey("Test Each Plugin", t, func() {
-		s := NewStorage(nil)
+		s := NewStorage()
 
 		So(s.Add(TestPlugin("test")), ShouldBeNil)
-		So(errors.Cause(s.Add(TestPlugin("test"))), ShouldEqual, api.ErrPluginAlreadyRegistered)
+		So(errors.Cause(s.Add(TestPlugin("test"))), ShouldEqual, plugsys.ErrPluginAlreadyRegistered)
 		So(s.Add(TestPlugin("test2")), ShouldBeNil)
-		So(errors.Cause(s.Add(TestPlugin("test2"))), ShouldEqual, api.ErrPluginAlreadyRegistered)
+		So(errors.Cause(s.Add(TestPlugin("test2"))), ShouldEqual, plugsys.ErrPluginAlreadyRegistered)
 
 		found := make([]string, 0)
 
-		s.Each(func(plugin api.Plugin) (err error) {
+		s.Each(func(plugin plugsys.Plugin) (err error) {
 			found = append(found, plugin.ID())
 			return
 		})
@@ -52,14 +52,14 @@ func TestStorage(t *testing.T) {
 	})
 
 	Convey("Test Filter Plugin", t, func() {
-		s := NewStorage(nil)
+		s := NewStorage()
 
 		So(s.Add(TestPlugin("test")), ShouldBeNil)
 		So(s.Add(TestPlugin2("test2")), ShouldBeNil)
 
 		found := make([]string, 0)
 
-		s.Filter(func(plugin api.Plugin) (err error) {
+		s.Filter(func(plugin plugsys.Plugin) (err error) {
 			found = append(found, plugin.ID())
 			return
 		})
