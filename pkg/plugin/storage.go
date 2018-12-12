@@ -178,6 +178,11 @@ func (s *storage) Provide(dependency interface{}, name string, namespace string)
 	return s.inj.Provide(dependency, name, args...)
 }
 
+// RemoveDependency removes dependency
+func (s *storage) RemoveDependency(name string, namespace ...string) (err error) {
+	return s.inj.Remove(name, Namespace)
+}
+
 // Version returns plugin Version
 func (s *storage) Version(ID string) (semver.Version, bool) {
 	s.mutex.RLock()

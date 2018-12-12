@@ -59,6 +59,9 @@ type PluginStorage interface {
 	// Provide adds additional dependencies to injector.
 	Provide(target interface{}, name string, namespace string) error
 
+	// RemoveDependency removes dependency
+	RemoveDependency(name string, namespace ...string) (err error)
+
 	// Version returns version for given plugin id, if not implemented it returns default dev version
 	Version(ID string) (semver.Version, bool)
 }
