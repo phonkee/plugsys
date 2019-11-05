@@ -30,9 +30,13 @@ type PluginVersion interface {
 	Version() semver.Version
 }
 
+type FilterOptions struct {
+	PreCallback  func(interface{})
+	PostCallback func(interface{}, error)
+}
+
 // PluginStorage implementation
 type PluginStorage interface {
-
 	// Add adds new plugin to storage, if it's already there it returns error
 	Add(Plugin) error
 
@@ -45,7 +49,7 @@ type PluginStorage interface {
 	// Filter iterates over all plugins and calls given callback. Callback must be function returning error
 	// and have single argument of any interface. Filter method will then try to match each plugin to this
 	// interface, and when plugin satisfies that interface, it is called
-	Filter(callback interface{}) (err error)
+	Filter(callback interface{}, opts ...*FilterOptions) (err error)
 
 	// Get returns plugin by plugin id
 	Get(ID string) (Plugin, bool)

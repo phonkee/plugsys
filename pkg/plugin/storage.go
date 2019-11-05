@@ -104,7 +104,7 @@ func (s *storage) Exists(ID string) (exists bool) {
 
 // Apps filters plugins by given callback. callback must have single argument which is interface.
 // if plugin implements interface, callback is called
-func (s *storage) Filter(callback interface{}) (err error) {
+func (s *storage) Filter(callback interface{}, opts ...*plugsys.FilterOptions) (err error) {
 	var (
 		insp *inspector
 	)
@@ -124,9 +124,23 @@ func (s *storage) Filter(callback interface{}) (err error) {
 		// we have found one implementation
 		found = true
 
+		for _, opt := range opts {
+			if opt.PreCallback != nil {
+				opt.PreCallback(p)
+			}
+		}
+		postCallback := func(e error) {
+			for _, opt := range opts {
+				if opt.PreCallback != nil {
+					opt.PreCallback(p)
+				}
+			}
+		}
 		if errCallback = insp.call(p); errCallback != nil {
+			postCallback(errCallback)
 			return
 		}
+		postCallback(nil)
 		return
 	}); err != nil {
 		return
